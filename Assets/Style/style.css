@@ -14,6 +14,13 @@
     src: url('https://fonts.gstatic.com/s/inter/v3/QdVUSTchPBm7nuUeVf7EuQ.ttf') format('truetype');
 }
 
+@font-face {
+    font-family: 'Kalam';
+    font-style: normal;
+    font-weight: 300;
+    src: url('https://fonts.googleapis.com/css2?family=Kalam&display=swap') format('truetype');
+}
+
 body {
 
     background-color: #ffffff;
@@ -192,6 +199,9 @@ li[id="lateral"] {
     display: flex;
     place-items: center;
     color: #ffffff;
+    box-shadow:
+                3px 2px 10px #474747; /* Sombra no fundo */
+    
 }
 
 .apresentacao h1 {
@@ -234,20 +244,37 @@ li[id="lateral"] {
     width: 350px;
 }
 
+
+.card {
+    width: 600px;
+    height: 300px;
+    background-image: url('../Captura\ de\ tela\ 2023-10-01\ 171701.png'); /* Substitua pelo caminho real da sua imagem */
+    background-size: cover;
+    border-radius: 10px;
+    margin: 20px auto 0 auto;
+    margin-bottom: 1em;
+  }
+
+  img[id= "mapa"]{
+    width: 600px;
+    height: 300px;
+
+  }
+
 .ondenosencontrartexto {
     font-family: 'Inter', sans-serif;
     display: flex;
     flex-direction: column;
     margin-left: 10em;
     margin-top: 4em;
-    margin-right: 5em;
+    margin-right: 4em;
     
 }
 .sombra-na-div {
     
-    background-image: linear-gradient(to right,#ee840a,#e23e0c); /* Cor de fundo da sua div */
-    box-shadow: 0px -5px 10px #ee840a, /* Sombra no topo */
-                0px 0px 10px #ee840a; /* Sombra no fundo */
+ 
+    box-shadow: 0px -5px 120px #474747, /* Sombra no topo */
+                0px 0px 1px #ffffff; /* Sombra no fundo */
   }
   
   .dog{
@@ -257,17 +284,18 @@ li[id="lateral"] {
   
   
   img[id = "dog-corpo"]{
-    top: 107.5vh;
- 
-    position: absolute;
-    
+    margin: 10em;
+
+    margin-bottom: 0;
   }
-   img[id = "dog-patas"]{
-    top: 129.7vh;
-    position: absolute;
-    }
+
 .ondenosencontrartexto h1{
 
     color: #333;
-    margin-bottom: 3em;
+    font-family: 'Kalam', cursive;
+    font-size: 50px;
+    margin-bottom: 1em;
+}
+.ondenosencontrartexto p{
+    font-size: 20px;
 }
