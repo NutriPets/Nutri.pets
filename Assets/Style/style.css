@@ -220,10 +220,6 @@ li[id="lateral"] {
     color: #ffffff;
 }
 
-.apresentacao img {
-    max-width: 100%;
-    margin-left: 1px;
-}
 
 .center {
     display: flex;

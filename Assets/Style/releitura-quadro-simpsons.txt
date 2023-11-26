@@ -1,0 +1,203 @@
+% Defina os vértices do quadro
+quadro_vertices = [0, 0; 0, 10; 10, 10; 10, 0; 0, 0];
+
+% Crie uma figura vazia
+figure;
+
+% Definação de cor marrom (RGB)
+cor_marrom = [0.6, 0.4, 0.2];
+cor_ceu_azul = [0, 0.6, 1];
+cor_verde = [100, 149, 237] / 255;
+cor_marrom_claro = [205, 133, 63] / 255;
+cor_branca = [1, 1, 1];
+cor_amarela = [1, 1, 0];
+
+% Adicione a moldura marrom usando a função fill
+fill(quadro_vertices(:, 1), quadro_vertices(:, 2), cor_marrom);
+hold on;
+
+% Defina os vértices do céu azul dentro da moldura
+ceu_vertices = [1, 1; 1, 9; 9, 9; 9, 1; 1, 1];
+
+
+% Adicione o céu azul usando a função fill
+fill(ceu_vertices(:, 1), ceu_vertices(:, 2), cor_ceu_azul);
+
+% Defina os vértices do retângulo verde dentro do céu
+retangulo_verde_vertices = [1, 1; 1, 3; 9, 3; 9, 1; 1, 1];
+
+
+
+% Adicione o retângulo verde usando a função fill
+fill(retangulo_verde_vertices(:, 1), retangulo_verde_vertices(:, 2), cor_verde);
+
+
+
+% Defina os vértices do trapézio marrom sobre o retângulo verde (largura menor)
+trapezio_marrom_vertices = [3, -1; 4, -2; 6, -2; 7, -1; 3, -1];
+
+% Ajuste as coordenadas x e y do trapézio para alinhá-lo corretamente
+altura_maxima_retangulo = max(retangulo_verde_vertices(:, 2));
+deslocamento_y = altura_maxima_retangulo - min(trapezio_marrom_vertices(:, 2));
+trapezio_marrom_vertices(:, 2) = trapezio_marrom_vertices(:, 2) + deslocamento_y;
+
+
+% Adicione o trapézio marrom usando a função fill
+fill(trapezio_marrom_vertices(:, 1), trapezio_marrom_vertices(:, 2), cor_marrom_claro);
+
+
+
+% Ajuste as dimensões do retângulo superior
+largura_retangulo_superior = 0.1 * (max(trapezio_marrom_vertices(:, 1)) - min(trapezio_marrom_vertices(:, 1)));
+altura_retangulo_superior = 1.5 * (max(trapezio_marrom_vertices(:, 2)) - min(trapezio_marrom_vertices(:, 2)));
+
+% Calcule as coordenadas do centro do trapézio
+centro_trapezio = [mean(trapezio_marrom_vertices(:, 1)), max(trapezio_marrom_vertices(:, 2))];
+
+% Calcule as coordenadas do retângulo superior alinhado
+retangulo_superior_vertices = [centro_trapezio(1) - largura_retangulo_superior / 2, centro_trapezio(2);
+                               centro_trapezio(1) - largura_retangulo_superior / 2, centro_trapezio(2) + altura_retangulo_superior;
+                               centro_trapezio(1) + largura_retangulo_superior / 2, centro_trapezio(2) + altura_retangulo_superior;
+                               centro_trapezio(1) + largura_retangulo_superior / 2, centro_trapezio(2);
+                               centro_trapezio(1) - largura_retangulo_superior / 2, centro_trapezio(2)];
+
+% Ajuste do eixo x do retângulo superior (por exemplo, aumentar em 2 unidades)
+retangulo_superior_vertices(:, 1) = retangulo_superior_vertices(:, 1) +0.4;
+
+% Adicione o retângulo superior usando a função fill
+fill(retangulo_superior_vertices(:, 1), retangulo_superior_vertices(:, 2), cor_marrom_claro);
+
+% Defina a quantidade de deslocamento no eixo y para o triângulo
+deslocamento_y_triangulo = 0.5;
+
+% Defina os vértices do triângulo retângulo ao lado do retângulo superior
+triangulo_vertices = [max(retangulo_superior_vertices(:, 1)), centro_trapezio(2) + deslocamento_y_triangulo;
+                      max(retangulo_superior_vertices(:, 1)) + 1, centro_trapezio(2) + deslocamento_y_triangulo;
+                      max(retangulo_superior_vertices(:, 1)), centro_trapezio(2) + 1 + deslocamento_y_triangulo];
+
+
+
+% Adicione o triângulo usando a função fill com a cor branca
+fill(triangulo_vertices(:, 1), triangulo_vertices(:, 2), cor_branca);
+
+
+% Defina os vértices do segundo triângulo retângulo invertido ao lado do retângulo superior
+triangulo_invertido_vertices = [min(retangulo_superior_vertices(:, 1)), centro_trapezio(2) + deslocamento_y_triangulo;
+                                min(retangulo_superior_vertices(:, 1)) - 1, centro_trapezio(2) + deslocamento_y_triangulo;
+                                min(retangulo_superior_vertices(:, 1)), centro_trapezio(2) + 1 + deslocamento_y_triangulo];
+
+% Adicione o segundo triângulo usando a função fill com a cor branca
+fill(triangulo_invertido_vertices(:, 1), triangulo_invertido_vertices(:, 2), cor_branca);
+
+
+
+
+% Adicione o sol no canto superior direito dentro da moldura
+raio_sol = 1.5;
+posicao_sol = [9 - raio_sol, 9 - raio_sol];
+
+theta_sol = linspace(0, 2 * pi, 100);
+sol_x = posicao_sol(1) + raio_sol * cos(theta_sol);
+sol_y = posicao_sol(2) + raio_sol * sin(theta_sol);
+
+fill(sol_x, sol_y, cor_amarela); % Amarelo para o sol
+
+
+% Ajuste os limites do gráfico para garantir que o quadro seja completamente visível
+axis equal;
+axis([-2, 15, -2, 15]);
+
+% Adicione rótulos e título
+xlabel('Eixo X');
+ylabel('Eixo Y');
+title('Releitura Quadro dos Simpsons');
+
+% Desative o modo de retenção para evitar sobreposição de gráficos
+hold off;
+
+
+% Definir matriz de dilatação
+escala_x = 1.5; % Fator de escala no eixo x
+escala_y = 0.8; % Fator de escala no eixo y
+D = [escala_x 0; 0 escala_y];
+
+% Aplicar a dilatação a todos os vértices
+quadro_dilatado = quadro_vertices * D;
+ceu_dilatado = ceu_vertices * D;
+retangulo_verde_dilatado = retangulo_verde_vertices * D;
+trapezio_marrom_dilatado = trapezio_marrom_vertices * D;
+retangulo_superior_dilatado = retangulo_superior_vertices * D;
+triangulo_dilatado = triangulo_vertices * D;
+triangulo_invertido_dilatado = triangulo_invertido_vertices * D;
+posicao_sol_dilatada = posicao_sol * D;
+
+% Criar uma nova figura para a transformação de dilatação
+figure;
+fill(quadro_dilatado(:, 1), quadro_dilatado(:, 2), cor_marrom);
+hold on;
+
+% Adicionar outras partes da cena com as coordenadas transformadas
+
+fill(ceu_dilatado(:, 1), ceu_dilatado(:, 2), cor_ceu_azul);
+fill(retangulo_verde_dilatado(:, 1), retangulo_verde_dilatado(:, 2), cor_verde);
+fill(trapezio_marrom_dilatado(:, 1), trapezio_marrom_dilatado(:, 2), cor_marrom_claro);
+fill(retangulo_superior_dilatado(:, 1), retangulo_superior_dilatado(:, 2), cor_marrom_claro);
+fill(triangulo_dilatado(:, 1), triangulo_dilatado(:, 2), cor_branca);
+fill(triangulo_invertido_dilatado(:, 1), triangulo_invertido_dilatado(:, 2), cor_branca);
+fill(sol_x + posicao_sol_dilatada(1), sol_y + posicao_sol_dilatada(2), cor_amarela);
+
+% Configurações adicionais, rótulos, etc.
+xlabel('Eixo X');
+ylabel('Eixo Y');
+title('Transformação por Dilatação');
+
+% Desativar o modo de retenção para evitar sobreposição de gráficos
+hold off;
+
+
+
+% Definir matriz de rotação
+theta = pi/4; % Ângulo de rotação (45 graus)
+R = [cos(theta) -sin(theta); sin(theta) cos(theta)];
+
+% Aplicar a rotação aos vértices originais
+quadro_rotacionado = quadro_vertices * R;
+ceu_rotacionado = ceu_vertices * R;
+retangulo_verde_rotacionado = retangulo_verde_vertices * R;
+trapezio_marrom_rotacionado = trapezio_marrom_vertices * R;
+retangulo_superior_rotacionado = retangulo_superior_vertices * R;
+triangulo_rotacionado = triangulo_vertices * R;
+triangulo_invertido_rotacionado = triangulo_invertido_vertices * R;
+posicao_sol_rotacionada = posicao_sol * R;
+
+% Criar uma nova figura para a transformação de rotação
+figure;
+fill(quadro_rotacionado(:, 1), quadro_rotacionado(:, 2), cor_marrom);
+hold on;
+
+% Adicionar outras partes da cena com as coordenadas transformadas
+fill(ceu_rotacionado(:, 1), ceu_rotacionado(:, 2), cor_ceu_azul);
+fill(retangulo_verde_rotacionado(:, 1), retangulo_verde_rotacionado(:, 2), cor_verde);
+fill(trapezio_marrom_rotacionado(:, 1), trapezio_marrom_rotacionado(:, 2), cor_marrom_claro);
+fill(retangulo_superior_rotacionado(:, 1), retangulo_superior_rotacionado(:, 2), cor_marrom_claro);
+fill(triangulo_rotacionado(:, 1), triangulo_rotacionado(:, 2), cor_branca);
+fill(triangulo_invertido_rotacionado(:, 1), triangulo_invertido_rotacionado(:, 2), cor_branca);
+fill(sol_x + posicao_sol_rotacionada(1), sol_y + posicao_sol_rotacionada(2), cor_amarela);
+
+% Configurações adicionais, rótulos, etc.
+xlabel('Eixo X');
+ylabel('Eixo Y');
+title('Transformação por Rotação');
+
+% Desativar o modo de retenção para evitar sobreposição de gráficos
+hold off;
+
+
+
+
+
+
+
+
+
+
